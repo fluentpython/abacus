@@ -106,13 +106,19 @@ def _make_command(name):
     return command
 
 
+def _install_command(name, function):
+    if name in globals():
+        raise ValueError(f'duplicate name: {name}')
+    globals()[name] = function
+    __all__.append(name)
+
+
 def _install_commands():
     for name, aliases in _commands.items():
-        globals()[name] = _make_command(name)
-        __all__.append(name)
+        new_command = _make_command(name)
+        _install_command(name, new_command)
         for alias in aliases:
-            globals()[alias] = globals()[name]
-            __all__.append(alias)
+            _install_command(alias, new_command)
 
 
 _install_commands()
