@@ -15,7 +15,8 @@ The metaprogramming features are:
 * `_make_command`: builds a stand-alone function from an `Abacus` method;
 * `_install_commands`: makes commands and installs them as global functions;
 
-**Note**: `abacus` has more lines of code and is much harder to understand than `plain_abacus`.
+**Note**:
+`abacus` has more lines of code and is much harder to understand than `plain_abacus`.
 However, this example was inspired by the
 [jupyturtle](https://github.com/ramalho/jupyturtle) project,
 where the `Turtle` class has many more methods than `Abacus`,
