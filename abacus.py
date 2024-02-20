@@ -108,7 +108,7 @@ def _make_command(name):
 
 def _install_command(name, function):
     if name in globals():
-        raise ValueError(f'duplicate name: {name}')
+        raise ValueError(f'duplicate command name: {name}')
     globals()[name] = function
     __all__.append(name)
 
