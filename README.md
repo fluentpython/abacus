@@ -11,7 +11,8 @@ duplication in the `add` and `sub` functions of `plain_abacus`.
 
 The metaprogramming features are:
 
-* `@command`: decorator to register names of commands;
+* `@command`: decorator to register a method name as a command;
+* `@command_alias`: decorator to register a method name and aliases as a command;
 * `_make_command`: builds a stand-alone function from an `Abacus` method;
 * `_install_commands`: makes commands and installs them as global functions;
 

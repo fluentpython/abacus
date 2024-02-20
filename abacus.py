@@ -10,7 +10,7 @@ The OO API:
     >>> a.add(5)
     >>> a
     Abacus(5)
-    >>> a.sub(3)
+    >>> a.subtract(3)
     >>> a
     Abacus(2)
 
@@ -18,8 +18,13 @@ The imperative API uses a global instance of `Abacus`:
 
     >>> add(7)
     Abacus(7)
-    >>> sub(4)
+    >>> subtract(4)
     Abacus(3)
+
+The imperative API provides shorter aliases for command names:
+
+    >>> sub(1)
+    Abacus(2)
 
 Use `new_abacus` to start a new calculation:
 
@@ -31,15 +36,24 @@ Custom module `dir`:
 
     >>> import abacus
     >>> dir(abacus)
-    ['Abacus', 'add', 'new_abacus', 'sub']
+    ['Abacus', 'add', 'new_abacus', 'sub', 'subtract']
 """
 
-command_names = []
+# mapping of method names to global aliases
+_commands = {}
 
 
 def command(method):
-    command_names.append(method.__name__)
+    _commands[method.__name__] = []  # no alias
     return method
+
+
+def command_alias(*names):
+    def decorator(method):
+        _commands[method.__name__] = list(names)
+        return method
+
+    return decorator
 
 
 class Abacus:
@@ -53,8 +67,8 @@ class Abacus:
     def add(self, value):
         self.total += value
 
-    @command
-    def sub(self, value):
+    @command_alias('sub')
+    def subtract(self, value):
         self.total -= value
 
 
@@ -93,9 +107,12 @@ def _make_command(name):
 
 
 def _install_commands():
-    for name in command_names:
+    for name, aliases in _commands.items():
         globals()[name] = _make_command(name)
         __all__.append(name)
+        for alias in aliases:
+            globals()[alias] = globals()[name]
+            __all__.append(alias)
 
 
 _install_commands()
