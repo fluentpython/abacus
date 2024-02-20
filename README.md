@@ -3,7 +3,7 @@
 The `abacus` module is an example of module metaprogramming
 in service of developer experience.
 
-The end-user API for `plain_abacus` and `abacus` are the same.
+The end-user APIs for `plain_abacus` and `abacus` are the same.
 Please view their module-level docstrings for examples.
 
 But `abacus` uses metaprogramming to elliminate the code
